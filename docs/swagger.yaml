@@ -1,0 +1,113 @@
+definitions:
+  routes.ResponseBody:
+    properties:
+      body: {}
+      message:
+        type: string
+      status:
+        type: integer
+    type: object
+  routes.User:
+    properties:
+      age:
+        type: integer
+      id:
+        type: integer
+      name:
+        type: string
+    type: object
+info:
+  contact: {}
+paths:
+  /support/ping:
+    get:
+      description: Check if API is up returning "OK"
+      responses: {}
+      tags:
+      - Support
+  /user/add:
+    post:
+      parameters:
+      - description: Add user
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/routes.User'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/routes.ResponseBody'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/routes.ResponseBody'
+      summary: Create a new User
+      tags:
+      - User
+  /user/del/{id}:
+    delete:
+      description: Delete an user by its id
+      parameters:
+      - description: ID User
+        in: path
+        name: id
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/routes.ResponseBody'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/routes.ResponseBody'
+      summary: Delete an user
+      tags:
+      - User
+  /user/find:
+    get:
+      description: Return a user by its id, name or age as query params
+      parameters:
+      - description: search by id
+        in: query
+        name: id
+        type: string
+      - description: search by name
+        in: query
+        name: name
+        type: string
+      - description: search by age
+        in: query
+        name: age
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/routes.ResponseBody'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/routes.ResponseBody'
+      summary: Return a user by id, name or age
+      tags:
+      - User
+  /user/list:
+    get:
+      description: Return a list of user objects
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/routes.ResponseBody'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/routes.ResponseBody'
+      summary: Return all users
+      tags:
+      - User
+swagger: "2.0"

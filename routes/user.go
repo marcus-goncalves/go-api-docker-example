@@ -30,6 +30,13 @@ var (
 	}
 )
 
+// @Router /user/del/{id} [delete]
+// @Tags User
+// @Summary Delete an user
+// @Description Delete an user by its id
+// @Param id path string true "ID User"
+// @Success 200 {object} ResponseBody
+// @Failure 400 {object} ResponseBody
 func (u *User) Delete(c *gin.Context) {
 	id, err := strconv.ParseInt(c.Params.ByName("id"), 10, 0)
 	if err != nil {
@@ -57,6 +64,12 @@ func (u *User) Delete(c *gin.Context) {
 	c.JSON(res.Status, res)
 }
 
+// @Router /user/add [post]
+// @Tags User
+// @Summary Create a new User
+// @Param user body User true "Add user"
+// @Success 200 {object} ResponseBody
+// @Failure 400 {object} ResponseBody
 func (u *User) Add(c *gin.Context) {
 	var newUser User
 	if err := c.ShouldBindJSON(&newUser); err != nil {
@@ -79,6 +92,12 @@ func (u *User) Add(c *gin.Context) {
 	c.JSON(res.Status, res)
 }
 
+// @Router /user/list [get]
+// @Tags User
+// @Summary Return all users
+// @Description Return a list of user objects
+// @Success 200 {object} ResponseBody
+// @Failure 400 {object} ResponseBody
 func (u *User) List(c *gin.Context) {
 	if len(Data) == 0 {
 		res := ResponseBody{
@@ -99,6 +118,15 @@ func (u *User) List(c *gin.Context) {
 	c.JSON(res.Status, res)
 }
 
+// @Router /user/find [get]
+// @Tags User
+// @Summary Return a user by id, name or age
+// @Description Return a user by its id, name or age as query params
+// @Param id query string false "search by id"
+// @Param name query string false "search by name"
+// @Param age query string false "search by age"
+// @Success 200 {object} ResponseBody
+// @Failure 400 {object} ResponseBody
 func (u *User) Find(c *gin.Context) {
 	params := c.Request.URL.Query()
 
